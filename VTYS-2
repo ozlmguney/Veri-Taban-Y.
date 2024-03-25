@@ -29,26 +29,20 @@ aciklama nvarchar(500),
 adresNo int constraint FK_adresler_kutuphane FOREIGN KEY (adresNo) references adresler(adresNo)
 );
 
-CREATE TABLE Customer (
-    customer_id INT PRIMARY KEY,
-    customer_name VARCHAR(100),
-    customer_email VARCHAR(100),
-    customer_address VARCHAR(255)
+create table bulunur1(
+miktar int not null primary key identity(1,1),
+kutuphaneNo int constraint FK_kutuphane_bulunur1 foreign key(kutuphaneNo) references kutuphane(kutuphaneNo),
+ISBN nvarchar(50) constraint FK_kitaplar_bulunur1 foreign key(ISBN) references kitaplar(ISBN),
 );
 
-CREATE TABLE Product (
-    product_id INT PRIMARY KEY,
-    product_name VARCHAR(100),
-    product_price DECIMAL(10, 2),
-    product_description TEXT
+create table yazar(
+yazarNo int not null primary key identity(1,1),
+yazarNumber int constraint FK_yazarlar_yazar foreign key(yazarNumber) references yazarlar(yazarNumber),
+ISBN nvarchar(50) constraint FK_kitap_yazar foreign key(ISBN) references kitaplar(ISBN),
 );
 
-CREATE TABLE Order (
-    order_id INT PRIMARY KEY,
-    customer_id INT,
-    product_id INT,
-    quantity INT,
-    order_date DATE,
-    FOREIGN KEY (customer_id) REFERENCES Customer(customer_id),
-    FOREIGN KEY (product_id) REFERENCES Product(product_id)
+create table bulunur2(
+bulunurNo int not null primary key identity(1,1),
+kategoriNo int constraint FK_kategoriler_bulunur2 foreign key(kategoriNo) references kategoriler(kategoriNo),
+ISBN nvarchar(50) constraint FK_kitaplar_bulunur2 foreign key(ISBN) references kitaplar(ISBN),
 );
