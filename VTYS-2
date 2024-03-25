@@ -47,15 +47,3 @@ miktar int not null primary key identity(1,1),
 kutuphaneNo int constraint FK_kutuphane_bulunur1 foreign key(kutuphaneNo) references kutuphane(kutuphaneNo),
 ISBN nvarchar(50) constraint FK_kitaplar_bulunur1 foreign key(ISBN) references kitaplar(ISBN),
 );
-
-create table yazar(
-yazarNo int not null primary key identity(1,1),
-yazarNumber int constraint FK_yazarlar_yazar foreign key(yazarNumber) references yazarlar(yazarNumber),
-ISBN nvarchar(50) constraint FK_kitap_yazar foreign key(ISBN) references kitaplar(ISBN),
-);
-
-create table bulunur2(
-bulunurNo int not null primary key identity(1,1),
-kategoriNo int constraint FK_kategoriler_bulunur2 foreign key(kategoriNo) references kategoriler(kategoriNo),
-ISBN nvarchar(50) constraint FK_kitaplar_bulunur2 foreign key(ISBN) references kitaplar(ISBN),
-);
