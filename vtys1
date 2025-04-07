@@ -1,0 +1,167 @@
+create database Library; -- bir kez database oluşturulurken çalıştırılır.
+
+
+use Library -- bu kütüpaheyi kullanarak aşağıdaki tabloları ekleyebilirsiniz.
+
+
+create table Adresler(
+adresNo int not null identity(1,1) Primary Key,
+sehir nvarchar(100),
+cadde nvarchar(100),
+mahalle nvarchar(100),
+binaNo int,
+postaKodu int,
+ulke nvarchar(100)
+);
+
+create table uyeler(
+uyeNo int not null identity(1,1) Primary Key,
+uyeAdi nvarchar(50) not null,
+uyeSoyadi nvarchar(50) not null,
+eposta nvarchar(100),
+telefon nvarchar(100),
+cinsiyet char(2),
+adresNO int Foreign Key(adresNo) REFERENCES 
+adresler(adresNO)
+);
+
+create table kutuphane(
+kutuphaneNO int not null identity(1,1) primary key,
+kutuphaneIsmi nvarchar(100) not null,
+aciklama nvarchar(150),
+adresNo int foreign key (adresNo) references adresler(adresNo)
+);
+
+create table kitaplar(
+ISBN int not null primary key,
+sayfaSayisi int,
+kitapAdi nvarchar(100) not null,
+yayinTarihi nvarchar(100)
+);
+
+
+create table emanet(
+emanetNO int not null identity(1,1) Primary Key,
+emanetTarihi nvarchar(100),
+teslimTarihi nvarchar(100),
+uyeNo int Foreign Key (uyeNo) references uyeler(uyeNo),
+kutuphaneNo int Foreign Key (kutuphaneNo) references kutuphane (kutuphaneNo),
+ISBN int Foreign Key (ISBN) references kitaplar(ISBN)
+);
+
+CREATE TABLE Yazarlar(
+yazarNo int not null Primary Key identity(1,1),
+yazarAdi nvarchar(70),
+yazarSoyadi nvarchar(70)
+);
+
+Create Table Kategori(
+kategoriNo int identity(1,1) not null Primary Key,
+kategoriAdi nvarchar(100)
+);
+
+Create Table Kategori_Kitap(
+id int not null identity(1,1) Primary Key,
+ISBN int Foreign Key (ISBN) References kitaplar(ISBN),
+kategoriNo int Foreign Key (kategoriNo) 
+References Kategori (KategoriNo)
+);
+
+create Table Kitap_Yazarlar(
+id int not null identity(1,1) Primary Key,
+ISBN int Foreign Key (ISBN) References kitaplar(ISBN),
+yazarNo int Foreign Key (yazarNo) 
+References Yazarlar (yazarNo)
+);
+
+create table Kitap_Kutuphane(
+id int not null identity(1,1) Primary Key,
+ISBN int Foreign Key (ISBN) References kitaplar(ISBN),
+kutuphaneNo int Foreign Key (kutuphaneNo) 
+References kutuphane (kutuphaneNo),
+miktar int
+);
+
+  ALTER DATABASE Kutuphane MODIFY NAME=NewLibrary;
+
+
+ALTER DATABASE person MODIFY NAME=newPerson;
+
+create database person
+drop database person
+use Kutuphane
+select * from kitaplar
+ALTER TABLE kitaplar alter column kitapAdi nvarchar(150)
+
+use newPerson
+
+create table person(
+id int primary key,
+personName nvarchar(20)
+);
+
+select * from person
+alter table person add personSurname nvarchar(20)
+alter table person alter column personSurname nvarchar(100)
+alter table person add birthdate datetime
+alter table person drop column birthdate
+
+
+use Kutuphane
+select * from adresler
+select * from uyeler
+
+insert into Adresler values ('Kayseri','15 Temmuz','Mevlana',12,3800,'Türkiye')
+
+insert into Adresler(sehir, binaNo) values ('Ankara', 7)
+
+insert into uyeler values ('Fatma Nur','Kılıçkaya', 'fnurkilickaya@kayseri.edu.tr',555,'K',1)
+
+update uyeler set telefon = 3445 where uyeNo = 1
+
+update Adresler set sehir = 'İstanbul' where binaNo = 12 and cadde ='15 Temmuz'
+
+delete from Adresler where adresNo = 2
+
+
+
+  Create Database Customers_DB
+use Customers_DB
+
+create Table DISTRICT(
+Id int not null Primary Key,
+CityId int,
+District nvarchar(100)
+);
+
+select * from DISTRICT
+
+create table CITY(
+CityId int PRIMARY KEY,
+CityName nvarchar (100),
+);
+
+EXEC sp_rename 'DISTRICT.District', 'DistrictName', 'COLUMN';
+
+
+ALTER TABLE DISTRICT
+ADD CONSTRAINT FK_CityId FOREIGN KEY (CityId) REFERENCES CITY(CityId);
+
+create table Customers(
+id int not null primary key,
+NameSurname nvarchar(100),
+TCNumber int not null,
+Gender char(2),
+Email nvarchar(100),
+BırthDate int,
+CityId int foreign key (CityId) references CITY(CityId),
+DistrictId int foreign key (DistrictId) references DISTRICT(Id),
+TelNR1 nvarchar(100),
+TelNR2 nvarchar(100)
+);
+
+select * from Customers;
+select * from DISTRICT;
+select * from CITY;
+
+  
